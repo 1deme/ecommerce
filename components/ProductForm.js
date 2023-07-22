@@ -56,10 +56,10 @@ export default function ProductForm({
             <label>
                 Photos
             </label>
-            <div className="mb-2 flex">
+            <div className="mb-2 flex fflex-wrap gap-2">
                 {!!images?.length && images.map(link => (
-                    <div key = {link} className="inline-block h-24"> 
-                        <img src={link} alt = ""/>
+                    <div key = {link} className="h-24"> 
+                        <img src={link} alt = "" className="rounded-lg"/>
                     </div>
                 ))}
                 <label className="w-24 h-24 coursor-pointer text-center
