@@ -7,11 +7,12 @@ export default function ProductForm({
     title:existingTitle,
     description:existingDescription,
     price:existingPrice,
-    images,
+    images:existingImages,
 }){
     const [title,setTitle] = useState(existingTitle || '');
     const [description, setDescription] = useState(existingDescription || '');
     const [price, setPrice] = useState(existingPrice || '');
+    const [images,setImages] = useState(existingImages || []);
     const [goToProducts, setGoToProducts] = useState(false);
     const router = useRouter();
     async function saveProduct(ev){
@@ -39,9 +40,9 @@ export default function ProductForm({
             for(const file of files){
                 data.append('file', file);
             }
-            const res = await fetch('/api/upload', {
-                method: 'POST',
-                doby: data,
+            const res = await axios.post('/api/upload',data);
+            setImages(odlImages => {
+                return [...odlImages, ...res.data.links];
             })
             console.log(res)
         }
@@ -55,7 +56,12 @@ export default function ProductForm({
             <label>
                 Photos
             </label>
-            <div className="mb-2">
+            <div className="mb-2 flex">
+                {!!images?.length && images.map(link => (
+                    <div key = {link} className="inline-block h-24"> 
+                        <img src={link} alt = ""/>
+                    </div>
+                ))}
                 <label className="w-24 h-24 coursor-pointer text-center
                 flex items-center justify-center text-sm gap-1 
                 text-gray-500 rounded-lg gb-gray-200">
