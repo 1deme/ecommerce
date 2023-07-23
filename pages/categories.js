@@ -47,6 +47,9 @@ function Categories({swal}){
             setEditedCategory(category);
             SetName(category.name);
             setParentCategory(category.parent?._id);
+            setProperties(category.properties.map(({name,values}) =>
+                ({name,
+                values:values.join(',')})));
         }
     
         function deleteCategory(category){
